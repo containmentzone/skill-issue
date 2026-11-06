@@ -102,16 +102,3 @@ assert.Equal(t, http.StatusOK, resp.StatusCode)
 ```
 
 `app.Test` takes an optional `fiber.TestConfig` for timeouts. Everything else from [go-testing](../go-testing/SKILL.md) applies unchanged.
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| Choosing Fiber for "it's faster" with no measurement | `net/http.ServeMux` |
-| Storing `c.Params(...)` / `c.Body()` past the handler | `utils.CopyString`, or bind into a struct |
-| Copying a v2 snippet with `*fiber.Ctx` | v3 uses `fiber.Ctx`, no pointer |
-| `c.BodyParser` | `c.Bind().JSON(&v)` |
-| Error responses written inline in every handler | Central `ErrorHandler` in `fiber.Config`; `return err` |
-| `httptest.NewRecorder` | `app.Test(req)` |
-| Blocking `app.Listen` inside `fx.Hook.OnStart` | Bind synchronously, serve in a goroutine |
-| Fiber and `net/http` routes in one binary | Pick one |

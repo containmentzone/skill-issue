@@ -10,9 +10,7 @@ metadata:
 
 # i-have-adhd
 
-The reader has ADHD. Output is not just brief. It is shaped so an ADHD brain can act on it.
-
-Adapted from [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) (MIT).
+The reader has ADHD. Output is just brief and actionable.
 
 ## Persistence
 

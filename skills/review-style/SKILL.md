@@ -1,14 +1,12 @@
 ---
-name: style-filter
-description: Use when writing or editing prose that a human will read more than once — design docs, specs, READMEs, commit bodies, long chat explanations — or when a reader says the writing is dense, hard to skim, or tiring to re-read in a diff.
+name: review-style
+description: A skill for reviewing technical writing and code comments.
 user-invocable: true
 ---
 
 # style-filter
 
-A revision pass. Run it over a finished draft, before sending a message or saving a file.
-
-Keep what the draft says. Change how much work the reader does to find out.
+A revision pass for technical writing and code comments
 
 ## When to run it
 
@@ -27,7 +25,7 @@ Apply each check to a line, in order.
 
 ### Remember the audience
 
-Write for technically-minded users, not executives. Do not optimize to convince or sell, optimize for legibility.
+Write for technically-minded users, not executives. Do not optimize to convince or sell.
 
 ### Budget complexity
 
@@ -54,37 +52,28 @@ Emphasis asserted in the abstract is the same failure without the markup: *has t
 These claim importance without naming what is important. Emphasis must land on a concrete claim, and should be rare enough 
 to mean something.
 
-### Choose simple word
 
-*list* over *enumerate*, *use* over *leverage*, *about* over *regarding*, *so* over *thereby*, *is warranted* over
-*earns*, *means* over *says* where *means* is what you mean.
+### Avoid anthropomorphizing
 
-Where a technical noun exists, use it rather than a paraphrase of it: *its input* over *what reaches it*,
-*its return value* over *the thing it hands back*, *the renderer's input* over *everything the renderer needs*.
-
-Keep the precise word when you can quantify the value. `enumerate` is right in "enumerate the federated credentials
-on each identity", where the point is that every one is visited.
-
-### Tools and code do not choose
-
-Before: helm stops deciding anything
-After: helm is a renderer and doesn't contain any logic
+what reaches it -> its input  
+the thing it hands back -> its return value  
+everything the renderer needs -> the renderer's input  
+a prefix earns its place -> a prefix is only useful where...  
+the wrapper wants a name -> the wrapper requires a name  
+helm stops deciding anything -> helm is a renderer and doesn't contain any logic
 
 Say what the tool is, not what it wants. Code and prose do not earn, want, deserve, choose or decide:
-*a prefix earns its place* → *a prefix is only useful where it…*, *the wrapper wants a name* → *the wrapper needs a name*.
-State the condition, not the thing's wishes.
 
-*name* as a verb for an inanimate subject is the same move: *every rule names code*, *the message names the fix*.
-A document references, cites, points at or lists. Reserve *name* for giving something a name.
+Documents reference, cite, point to or list. They don't *name*, unless they're declaring a name.
 
-### must, should, can
+### Requirements
 
-In normative prose, use *must*, *should* and *can* and their negations *must not*, *should not*, *cannot*, in the RFC 2119 sense.
+When documenting technical requirements, use *must*, *should* and *can* and their negations *must not*,
+*should not*, *can not*, in the RFC 2119 sense. Use best judgement to decide on casing.
 
 ### Omit fragmented frames
 
-Before: Two demands follow from that. The chart must…
-After: The chart must…
+Two demands follow from that. The chart must… -> The chart must…
 
 Also: *There are two consequences*, *This has implications*, *Consider the following*. The sentence counts the items below instead
 of saying one of them. Delete it and start with the first item.

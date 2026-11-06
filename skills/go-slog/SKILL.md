@@ -58,14 +58,3 @@ log := r.log.With("repository_id", id)
 ## Testing
 
 Pass `slog.New(slog.NewTextHandler(io.Discard, nil))` so test output stays clean; swap in `os.Stderr` while debugging a single test. If log output itself is the assertion, write to a `bytes.Buffer` with the JSON handler and parse it.
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| `log.Info(fmt.Sprintf("user %s failed", id))` | `log.Info("user failed", "user_id", id)` |
-| Package-level `slog.Info` throughout your own code | Inject `*slog.Logger` |
-| Logging the error, then returning it too | Wrap with `%w`, log once at the top |
-| `Error` level for an expected 404 | `Info`, or `Debug` |
-| Repeating the same field on every line in a handler | `log := log.With(...)` once |
-| Adding zerolog/zap to a new service | `log/slog` |

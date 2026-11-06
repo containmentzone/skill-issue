@@ -6,9 +6,9 @@ user-invocable: false
 
 # Go Testing Conventions
 
-testify for assertions, clockwork for time. Nothing else.
+testify for assertions, clockwork for time.
 
-## Assertions — testify
+## testify
 
 **`assert` by default.** It records the failure and lets the test continue, so one run tells you everything that is wrong.
 
@@ -26,11 +26,9 @@ require.NoError(t, err) // nothing below works if this failed
 assert.Equal(t, "ready", svc.Status())
 ```
 
-The distinction is not stylistic. `assert.NoError` followed by a method call on a nil result turns a clear failure into a nil-pointer panic with a useless stack trace. `require` everywhere is the opposite problem: you fix one assertion, rerun, find the next.
-
 Use the specific matcher over a hand-rolled boolean — `assert.ErrorIs`, `assert.Len`, `assert.Contains`, `assert.ElementsMatch` all print the actual values; `assert.True(t, len(x) == 3)` prints `false`.
 
-## Time — clockwork
+## clockwork
 
 **Never `time.Sleep` to wait for something to happen.** It is slow when it works and flaky when it doesn't.
 
@@ -87,15 +85,3 @@ for _, tt := range tests {
 - **Discard logs:** `slog.New(slog.NewTextHandler(io.Discard, nil))`. Swap to `os.Stderr` while debugging one test.
 - **Fakes over mocking frameworks.** A ten-line struct implementing the interface beats generated mocks and reads better in review.
 - **Test the provider, not the container** — see [go-fx](../go-fx/SKILL.md).
-
-## Common Mistakes
-
-| Mistake | Fix |
-|---|---|
-| `time.Sleep(100 * time.Millisecond)` to let something settle | Inject `clockwork.Clock`, `Advance` it |
-| `Advance` without `BlockUntil` on concurrent code | `clock.BlockUntil(n)` first |
-| `require` for every assertion | `assert` by default |
-| `assert.NoError` then dereferencing the result | `require.NoError` — it is a precondition |
-| `assert.True(t, got == want)` | `assert.Equal` — it prints both values |
-| Shared mutable fixture across subtests | Build fresh state inside `t.Run` |
-| Real clock plus a generous timeout to "fix" flakiness | Fake clock; the flake is a missing synchronisation point |

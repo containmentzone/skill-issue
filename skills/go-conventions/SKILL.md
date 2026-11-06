@@ -15,6 +15,7 @@ One blessed choice per concern, stdlib first. Deviating is allowed but must be j
 | HTTP routing | `net/http.ServeMux` | `gofiber/fiber/v3` under a measured throughput requirement | [go-fiber](../go-fiber/SKILL.md) |
 | Dependency injection | `go.uber.org/fx` | Plain constructors in `main()` for tools with <5 components | [go-fx](../go-fx/SKILL.md) |
 | Logging | `log/slog` | None | [go-slog](../go-slog/SKILL.md) |
+| Database access | `database/sql`, avoid ORMs | | |
 | Test assertions, fake time | `testify/assert`, `clockwork` | None — never `time.Sleep` to synchronise | [go-testing](../go-testing/SKILL.md) |
 | Anything else | stdlib | A well-maintained library — see below | — |
 
@@ -41,7 +42,7 @@ Two failure modes, equally bad:
 
 **Adding a dependency for something stdlib does.** No `github.com/pkg/errors` (use `fmt.Errorf("...: %w", err)` with `errors.Is`/`errors.As`), no assertion DSLs beyond testify, no utility grab-bags, no router for `ServeMux`-shaped problems. `slices`, `maps`, `cmp`, and `errors` cover most of what people reach for libraries for.
 
-**Hand-rolling something genuinely hard.** Do not write your own crypto, JWT/OIDC verification, retry-with-backoff, rate limiter, SQL driver, YAML parser, UUID generator, or connection pool. These have subtle failure modes and you will get them wrong. Take the well-maintained library.
+**Do not hand-roll something actually hard or failure-prone.** Do not write your own crypto, JWT/OIDC verification, retry-with-backoff, rate limiter, SQL driver, YAML parser, UUID generator, or connection pool. These have subtle failure modes and you will get them wrong. Take the well-maintained library.
 
 The test: *would a bug here be obvious in review and cheap in production?* Yes → write it. No → import it.
 
